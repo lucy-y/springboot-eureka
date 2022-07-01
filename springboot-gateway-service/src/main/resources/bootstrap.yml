@@ -1,0 +1,11 @@
+spring:
+  active: local
+  application:
+    name: gateway-service
+  cloud:
+    config:
+      uri: http://localhost:8888
+
+management:
+  endpoints:
+    enabled-by-default: true
