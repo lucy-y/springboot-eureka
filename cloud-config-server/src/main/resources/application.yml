@@ -1,8 +1,38 @@
 server:
     port: 8888
+
 spring:
+  application:
+    name: cloud-config-server
+  profile:
+    active: local
   cloud:
     config:
       server:
         git:
-          uri: /path/to/your/git/repository
+          uri: https://github.com/lucy-y/springboot-eureka-config-repo.git
+          force-pull: true
+          #searchPaths: auth-service, push-service
+          searchPaths: '{application}'
+
+management:
+  endpoints:
+    web:
+      exposure:
+        include: refresh
+
+---
+
+spring:
+  profile: local
+
+eureka:
+  instance:
+    instance-id: config-microservice-instance
+  client:
+    register-with-eureka: true # server: false, client: true
+    fetch-registry: true
+    service-url:
+      defaultZone: ${EUREKA_URI:http://localhost:8761/eureka}
+
+---
